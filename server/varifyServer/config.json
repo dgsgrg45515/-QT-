@@ -1,0 +1,22 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": 50051
+  },
+  "redis": {
+    "host": "127.0.0.1",
+    "port": 6379,
+    "password": "",
+    "database": 0,
+    "codeTtlSeconds": 300
+  },
+  "email": {
+    "enabled": true,
+    "host": "smtp.163.com",
+    "port": 465,
+    "secure": true,
+    "user": "18679366872@163.com",
+    "password": "VGQm63w9bzfe6mbN",
+    "from": "18679366872@163.com"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "verify-server",
+  "version": "1.0.0",
+  "description": "gRPC email verification service for GateServer",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "node server.js",
+    "check": "node --check server.js && node --check config.js && node --check proto.js && node --check redis.js && node --check email.js"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.4",
+    "@grpc/proto-loader": "^0.8.1",
+    "ioredis": "^5.11.1",
+    "nodemailer": "^9.0.1"
+  }
+}
