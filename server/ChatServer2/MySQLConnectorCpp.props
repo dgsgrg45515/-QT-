@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <MySQLConnectorCppDir>F:\cppsoft\mysql-connector-c++-9.7.0-winx64</MySQLConnectorCppDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MySQLConnectorCppDir)\include;$(MySQLConnectorCppDir)\include\jdbc;C:\Program Files\MySQL\MySQL Server 8.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MySQLConnectorCppDir)\lib64\vs14;C:\Program Files\MySQL\MySQL Server 8.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;mysqlcppconnx.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /D "$(MySQLConnectorCppDir)\lib64\mysqlcppconn-10-vs14.dll" "$(OutDir)"
+xcopy /Y /D "$(MySQLConnectorCppDir)\lib64\mysqlcppconnx-2-vs14.dll" "$(OutDir)"
+xcopy /Y /D "$(MySQLConnectorCppDir)\lib64\libssl-3-x64.dll" "$(OutDir)"
+xcopy /Y /D "$(MySQLConnectorCppDir)\lib64\libcrypto-3-x64.dll" "$(OutDir)"
+xcopy /Y /D /I "$(MySQLConnectorCppDir)\lib64\plugin" "$(OutDir)\plugin"
+xcopy /Y /D "C:\Program Files\MySQL\MySQL Server 8.0\lib\libmysql.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="MySQLConnectorCppDir">
+      <Value>$(MySQLConnectorCppDir)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
