@@ -1,0 +1,63 @@
+#include "chatuserswid.h"
+#include "global.h"
+#include "ui_chatuserswid.h"
+
+ChatUsersWid::ChatUsersWid(QWidget *parent)
+    : ListItemBase(parent)
+    , ui(new Ui::ChatusersWid)
+{
+    ui->setupUi(this);
+    SetItemType(ListItemType::CHAT_USER_ITEM);
+}
+
+ChatUsersWid::~ChatUsersWid()
+{
+    delete ui;
+}
+
+void ChatUsersWid::SetInfo(std::shared_ptr<UserInfo> user_info)
+{
+    _user_info = user_info;
+    // 加载图片
+    QPixmap pixmap = loadUserIcon(_user_info->_icon);
+
+    // 设置图片自动缩放
+    ui->icon_lb->setPixmap(pixmap.scaled(ui->icon_lb->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->icon_lb->setScaledContents(true);
+
+    ui->user_name_lb->setText(_user_info->_name);
+    ui->user_chat_lb->setText(_user_info->_last_msg);
+}
+
+void ChatUsersWid::SetInfo(std::shared_ptr<FriendInfo> friend_info)
+{
+    _user_info = std::make_shared<UserInfo>(friend_info);
+    // 加载图片
+    QPixmap pixmap(_user_info->_icon);
+
+    // 设置图片自动缩放
+    ui->icon_lb->setPixmap(pixmap.scaled(ui->icon_lb->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->icon_lb->setScaledContents(true);
+
+    ui->user_name_lb->setText(_user_info->_name);
+    ui->user_chat_lb->setText(_user_info->_last_msg);
+
+}
+
+std::shared_ptr<UserInfo> ChatUsersWid::GetUserInfo()
+{
+    return _user_info;
+}
+
+void ChatUsersWid::updateLastMsg(std::vector<std::shared_ptr<TextChatData> > msgs)
+{
+    QString last_msg="";
+    for(auto& msg:msgs){
+        last_msg=msg->_msg_content;
+        _user_info->_chat_msgs.push_back(msg);
+    }
+
+    _user_info->_last_msg=last_msg;
+    ui->user_chat_lb->setText(_user_info->_last_msg);
+}
+
